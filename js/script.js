@@ -186,4 +186,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // initial render
   goTo(0);
+
+  /* --- Memory editing & Letter persistence --- */
+  const EDIT_KEY = 'neena_memories_v1';
+  const LETTER_KEY = 'neena_letter_v1';
+
+  // load saved pages if present
+  try{
+    const saved = localStorage.getItem(EDIT_KEY);
+    if(saved){
+      const parsed = JSON.parse(saved);
+      if(Array.isArray(parsed) && parsed.length === pages.length){
+        for(let i=0;i<pages.length;i++){ pages[i] = Object.assign(pages[i], parsed[i]); }
+      }
+    }
+  }catch(e){ console.warn('failed to load memories', e); }
+
+  // letter load/save
+  const letterText = document.getElementById('letterText');
+  const saveLetter = document.getElementById('saveLetter');
+  const downloadLetter = document.getElementById('downloadLetter');
+  const clearLetter = document.getElementById('clearLetter');
+  if(letterText){
+    letterText.value = localStorage.getItem(LETTER_KEY) || '';
+  }
+  if(saveLetter){ saveLetter.addEventListener('click', ()=>{ localStorage.setItem(LETTER_KEY, letterText.value); showToast('Letter saved'); }); }
+  if(clearLetter){ clearLetter.addEventListener('click', ()=>{ letterText.value=''; localStorage.removeItem(LETTER_KEY); showToast('Letter cleared'); }); }
+  if(downloadLetter){ downloadLetter.addEventListener('click', ()=>{
+    const blob = new Blob([letterText.value||''], {type:'text/plain'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = 'letter.txt'; a.click(); URL.revokeObjectURL(url);
+  }); }
+
+  // edit panel wiring
+  const editBtn = document.getElementById('editBtn');
+  const editPanel = document.getElementById('editPanel');
+  const editText = document.getElementById('editText');
+  const editFile = document.getElementById('editFile');
+  const saveEdit = document.getElementById('saveEdit');
+  const cancelEdit = document.getElementById('cancelEdit');
+
+  function persistPages(){ localStorage.setItem(EDIT_KEY, JSON.stringify(pages)); }
+
+  if(editBtn){ editBtn.addEventListener('click', ()=>{
+    editPanel.hidden = false; editText.value = pages[current].text || ''; editFile.value = null; editText.focus();
+  }); }
+  if(cancelEdit){ cancelEdit.addEventListener('click', ()=>{ editPanel.hidden = true; }); }
+  if(saveEdit){ saveEdit.addEventListener('click', ()=>{
+    // update text
+    pages[current].text = editText.value;
+    // update image if a file was chosen
+    const file = editFile.files && editFile.files[0];
+    if(file){
+      const reader = new FileReader();
+      reader.onload = (ev)=>{
+        pages[current].img = ev.target.result; persistPages(); render(current); editPanel.hidden=true; showToast('Memory saved');
+      };
+      reader.readAsDataURL(file);
+    } else { persistPages(); render(current); editPanel.hidden=true; showToast('Memory saved'); }
+  }); }
+
+  // ensure render reflects possibly loaded pages on start
+  render(current);
 });

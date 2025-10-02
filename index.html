@@ -19,52 +19,78 @@
   </header>
 
   <main class="scrapbook">
-    <section class="card">
-      <!-- floating stickers live here -->
-      <div id="stickers" class="stickers" aria-hidden="true"></div>
-      <div class="polaroid">
-        <img id="photo" src="assets/images/meowl.jpg" alt="Polaroid photo for scrapbook page 1">
-        <div class="caption">
-          <h2 id="page-title">reason #1</h2>
-          <p id="page-text">you're my best friend :3</p>
-        </div>
-      </div>
-
-      <div class="controls">
-        <button id="prevBtn" class="nav">⟵</button>
-        <div class="meta">
-          <span id="pageCounter">1 / 21</span>
-          <div id="dots" class="dots"></div>
-        </div>
-        <button id="nextBtn" class="nav">⟶</button>
-      </div>
-
-      <div class="extras">
-        <button id="openPlaylist" class="action">Open playlist</button>
-        <!-- QR controls: desktop shows dropdown to pick which QR(s) to show; mobile hides by default with a toggle -->
-        <div class="qr-controls">
-          <label for="qrSelect" class="small" style="margin-right:8px;">Show:</label>
-          <select id="qrSelect" class="small">
-            <option value="both">Both</option>
-            <option value="none">None</option>
-          </select>
-          <button id="toggleQR" class="action qr-toggle-mobile" aria-expanded="false" aria-controls="qrWrap" style="margin-left:12px;">Show QR</button>
-        </div>
-
-        <div id="qrWrap" class="qr-wrap">
-          <div class="qr-item" data-type="page" role="group" aria-label="QR for this page">
-            <p>QR — this page (open on phone)</p>
-            <img id="pageQR" alt="QR to this page">
-            <a id="downloadPageQR" class="small" download="scrapbook-qr.png">Download QR</a>
-          </div>
-          <div class="qr-item" data-type="playlist" role="group" aria-label="QR for playlist">
-            <p>QR — playlist</p>
-            <img id="playlistQR" alt="QR to playlist">
-            <a id="downloadPlaylistQR" class="small" download="playlist-qr.png">Download QR</a>
+    <div class="content-grid">
+      <section class="card">
+        <!-- floating stickers live here -->
+        <div id="stickers" class="stickers" aria-hidden="true"></div>
+        <div class="polaroid">
+          <img id="photo" src="assets/images/meowl.jpg" alt="Polaroid photo for scrapbook page 1">
+          <div class="caption">
+            <h2 id="page-title">memory #1</h2>
+            <p id="page-text">you're my best friend :3</p>
+            <div id="editPanel" class="edit-panel" hidden>
+              <label class="small">Edit memory</label>
+              <textarea id="editText" rows="3" style="width:100%;"></textarea>
+              <label class="small">Upload photo</label>
+              <input id="editFile" type="file" accept="image/*">
+              <div style="display:flex;gap:8px;margin-top:8px;">
+                <button id="saveEdit" class="action">Save</button>
+                <button id="cancelEdit" class="action">Cancel</button>
+              </div>
+            </div>
+            <button id="editBtn" class="action" style="margin-top:8px;">Edit memory</button>
           </div>
         </div>
-      </div>
-    </section>
+
+        <div class="controls">
+          <button id="prevBtn" class="nav">⟵</button>
+          <div class="meta">
+            <span id="pageCounter">1 / 21</span>
+            <div id="dots" class="dots"></div>
+          </div>
+          <button id="nextBtn" class="nav">⟶</button>
+        </div>
+
+        <div class="extras">
+          <button id="openPlaylist" class="action">Open playlist</button>
+          <!-- QR controls: desktop shows dropdown to pick which QR(s) to show; mobile hides by default with a toggle -->
+          <div class="qr-controls">
+            <label for="qrSelect" class="small" style="margin-right:8px;">Show:</label>
+            <select id="qrSelect" class="small">
+              <option value="both">Both</option>
+              <option value="none">None</option>
+            </select>
+            <button id="toggleQR" class="action qr-toggle-mobile" aria-expanded="false" aria-controls="qrWrap" style="margin-left:12px;">Show QR</button>
+          </div>
+
+          <div id="qrWrap" class="qr-wrap">
+            <div class="qr-item" data-type="page" role="group" aria-label="QR for this page">
+              <p>QR — this page (open on phone)</p>
+              <img id="pageQR" alt="QR to this page">
+              <a id="downloadPageQR" class="small" download="scrapbook-qr.png">Download QR</a>
+            </div>
+            <div class="qr-item" data-type="playlist" role="group" aria-label="QR for playlist">
+              <p>QR — playlist</p>
+              <img id="playlistQR" alt="QR to playlist">
+              <a id="downloadPlaylistQR" class="small" download="playlist-qr.png">Download QR</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="letter" aria-label="Birthday letter">
+        <div class="letter-card">
+          <h3>Letter to <span id="her-name-2">Neena</span></h3>
+          <textarea id="letterText" rows="12" placeholder="Write your birthday letter here..."></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px;">
+            <button id="saveLetter" class="action">Save Letter</button>
+            <button id="downloadLetter" class="action">Download</button>
+            <button id="clearLetter" class="action">Clear</button>
+          </div>
+        </div>
+      </aside>
+
+    </div>
   </main>
 
   <!-- transient toast -->
