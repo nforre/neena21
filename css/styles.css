@@ -16,11 +16,11 @@ body{
   min-height:100vh;
   font-family: Poppins, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   background-color: var(--bg);
-  /* plaid background if present + subtle white overlay for contrast
-    - gradient should be the top layer so it overlays the plaid
-    - list layers: overlay first, then image
+  /* plaid background if present + soft vignette overlay for contrast
+    - vignette (top) slightly darkens edges while keeping center bright so the pattern shows
+    - layer order: vignette overlay, then the repeating plaid image
   */
-  background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), var(--bg-image);
+  background-image: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 45%, rgba(0,0,0,0.06) 100%), var(--bg-image);
   background-repeat: no-repeat, repeat;
   background-size: cover, auto;
   background-position: center, center;
