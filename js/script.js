@@ -8,7 +8,7 @@ const PLAYLIST_URL = "https://open.spotify.com/playlist/6eq7TsNtsYyOno7dog51NO?s
 const pages = Array.from({length:21}, (_,i) => ({
   title: `reason #${i+1}`,
   text: `replace this with reason ${i+1} — tell a memory, a joke, or why they matter.`,
-  img: `assets/images/photo${i+1}.jpg`
+  img: i === 0 ? 'assets/images/meowl.jpg' : `assets/images/photo${i+1}.jpg`
 }));
 
 /* --- minimal app --- */
