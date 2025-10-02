@@ -80,6 +80,18 @@ body{
 .qr-wrap img{ width:140px; height:140px; background:#fff; padding:8px; border-radius:12px; object-fit:contain; box-shadow:0 10px 20px rgba(0,0,0,0.04);}
 .small{ color:var(--muted); text-decoration:none; display:inline-block; margin-top:6px; font-size:13px;}
 
+.qr-controls{ display:flex; align-items:center; gap:8px; }
+.qr-toggle-mobile{ display:none; }
+
+/* Mobile: hide QR area by default, show via class */
+@media (max-width:700px){
+  .qr-wrap{ display:none; opacity:0; max-height:0; overflow:hidden; transition:all .28s ease; }
+  .qr-toggle-mobile{ display:inline-block; }
+  .qr-controls select.small{ display:none; }
+  .qr-controls label{ display:none; }
+  .qr-wrap.show{ display:flex; opacity:1; max-height:600px; }
+}
+
 .foot{ color:var(--muted); margin-bottom:8px; font-size:13px;}
 
 @media (min-width:980px){

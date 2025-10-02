@@ -37,13 +37,24 @@
 
       <div class="extras">
         <button id="openPlaylist" class="action">Open playlist</button>
-        <div class="qr-wrap">
-          <div>
+        <!-- QR controls: desktop shows dropdown to pick which QR(s) to show; mobile hides by default with a toggle -->
+        <div class="qr-controls">
+          <label for="qrSelect" class="small" style="margin-right:8px;">Show:</label>
+          <select id="qrSelect" class="small">
+            <option value="both">Both</option>
+            <option value="page">This page</option>
+            <option value="playlist">Playlist</option>
+          </select>
+          <button id="toggleQR" class="action qr-toggle-mobile" aria-expanded="false" aria-controls="qrWrap" style="margin-left:12px;">Show QR</button>
+        </div>
+
+        <div id="qrWrap" class="qr-wrap">
+          <div class="qr-item" data-type="page" role="group" aria-label="QR for this page">
             <p>QR — this page (open on phone)</p>
             <img id="pageQR" alt="QR to this page">
             <a id="downloadPageQR" class="small" download="scrapbook-qr.png">Download QR</a>
           </div>
-          <div>
+          <div class="qr-item" data-type="playlist" role="group" aria-label="QR for playlist">
             <p>QR — playlist</p>
             <img id="playlistQR" alt="QR to playlist">
             <a id="downloadPlaylistQR" class="small" download="playlist-qr.png">Download QR</a>

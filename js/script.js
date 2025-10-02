@@ -29,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const dotsWrap = document.getElementById("dots");
   const playlistQR = document.getElementById("playlistQR");
   const pageQR = document.getElementById("pageQR");
+  const qrSelect = document.getElementById("qrSelect");
+  const toggleQR = document.getElementById("toggleQR");
   const downloadPageQR = document.getElementById("downloadPageQR");
   const downloadPlaylistQR = document.getElementById("downloadPlaylistQR");
   const openPlaylist = document.getElementById("openPlaylist");
@@ -87,6 +89,44 @@ document.addEventListener("DOMContentLoaded", () => {
   playlistQR.src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(PLAYLIST_URL);
   downloadPlaylistQR.href = playlistQR.src;
   openPlaylist.addEventListener("click", ()=> window.open(PLAYLIST_URL, "_blank"));
+
+  // QR selector: show both / page / playlist
+  function updateQRVisibility(choice){
+    document.querySelectorAll('.qr-item').forEach(el => {
+      const type = el.dataset.type;
+      let visible = true;
+      if(choice === 'both') visible = true;
+      else if(choice === 'page') visible = (type === 'page');
+      else if(choice === 'playlist') visible = (type === 'playlist');
+      el.style.display = visible ? '' : 'none';
+      el.setAttribute('aria-hidden', visible ? 'false' : 'true');
+    });
+  }
+  if(qrSelect){
+    qrSelect.addEventListener('change', e => updateQRVisibility(e.target.value));
+    // initial
+    updateQRVisibility(qrSelect.value || 'both');
+  }
+
+  // Mobile toggle for QR area
+  if(toggleQR){
+    const qrWrap = document.getElementById('qrWrap') || document.querySelector('.qr-wrap');
+    // set initial aria-hidden based on whether qrWrap is visible
+    if(qrWrap){
+      const isHidden = window.getComputedStyle(qrWrap).display === 'none' && !qrWrap.classList.contains('show');
+      qrWrap.setAttribute('aria-hidden', isHidden ? 'true' : 'false');
+    }
+    toggleQR.addEventListener('click', ()=>{
+      const expanded = toggleQR.getAttribute('aria-expanded') === 'true';
+      const willExpand = !expanded;
+      toggleQR.setAttribute('aria-expanded', String(willExpand));
+      toggleQR.textContent = willExpand ? 'Hide QR' : 'Show QR';
+      if(qrWrap) {
+        qrWrap.classList.toggle('show');
+        qrWrap.setAttribute('aria-hidden', qrWrap.classList.contains('show') ? 'false' : 'true');
+      }
+    });
+  }
 
   // initial render
   goTo(0);
