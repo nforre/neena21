@@ -1,0 +1,93 @@
+/* ----- CONFIG: edit these ----- */
+const HER_NAME = "[Her Name]";
+const YOUR_NAME = "[Your Name]";
+const PLAYLIST_URL = "https://open.spotify.com/playlist/REPLACE_WITH_YOUR_PLAYLIST_LINK";
+/* ------------------------------- */
+
+/* --- pages: 21 slots. Replace text/images with your content --- */
+const pages = Array.from({length:21}, (_,i) => ({
+  title: `reason #${i+1}`,
+  text: `replace this with reason ${i+1} — tell a memory, a joke, or why they matter.`,
+  img: `assets/images/photo${i+1}.jpg`
+}));
+
+/* --- minimal app --- */
+let current = 0;
+const total = pages.length;
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("her-name").textContent = HER_NAME;
+  document.querySelector(".sub").textContent = `a tiny digital scrapbook — made with ♥ by ${YOUR_NAME}`;
+
+  // elements
+  const photo = document.getElementById("photo");
+  const title = document.getElementById("page-title");
+  const text = document.getElementById("page-text");
+  const counter = document.getElementById("pageCounter");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const dotsWrap = document.getElementById("dots");
+  const playlistQR = document.getElementById("playlistQR");
+  const pageQR = document.getElementById("pageQR");
+  const downloadPageQR = document.getElementById("downloadPageQR");
+  const downloadPlaylistQR = document.getElementById("downloadPlaylistQR");
+  const openPlaylist = document.getElementById("openPlaylist");
+
+  // build dots
+  for(let i=0;i<total;i++){
+    const d = document.createElement("div");
+    d.className = "dot";
+    d.dataset.index = i;
+    d.addEventListener("click", ()=>goTo(i));
+    dotsWrap.appendChild(d);
+  }
+
+  function render(i){
+    const p = pages[i];
+    title.textContent = p.title;
+    text.textContent = p.text;
+    photo.src = p.img;
+    photo.onerror = ()=>{ photo.src = "https://via.placeholder.com/360x240?text=add+photo+assets/images/photo"+(i+1)+".jpg"; };
+    counter.textContent = `${i+1} / ${total}`;
+    // update dots
+    document.querySelectorAll(".dot").forEach((el,idx)=> el.classList.toggle("active", idx===i));
+    // update QR to this page (useful after deploy)
+    setTimeout(()=> {
+      const pageUrl = window.location.href;
+      pageQR.src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(pageUrl);
+      downloadPageQR.href = pageQR.src;
+    }, 80);
+  }
+
+  function goTo(i){
+    if(i<0) i=0;
+    if(i>total-1) i=total-1;
+    current = i;
+    render(current);
+  }
+  prevBtn.addEventListener("click", ()=>goTo(current-1));
+  nextBtn.addEventListener("click", ()=>goTo(current+1));
+
+  // keyboard
+  window.addEventListener("keydown", (e)=>{
+    if(e.key === "ArrowRight") goTo(current+1);
+    if(e.key === "ArrowLeft") goTo(current-1);
+  });
+
+  // swipe support
+  let touchStartX = 0;
+  window.addEventListener("touchstart", e => touchStartX = e.changedTouches[0].clientX);
+  window.addEventListener("touchend", e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(dx < -40) goTo(current+1);
+    if(dx > 40) goTo(current-1);
+  });
+
+  // playlist QR
+  playlistQR.src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" + encodeURIComponent(PLAYLIST_URL);
+  downloadPlaylistQR.href = playlistQR.src;
+  openPlaylist.addEventListener("click", ()=> window.open(PLAYLIST_URL, "_blank"));
+
+  // initial render
+  goTo(0);
+});
