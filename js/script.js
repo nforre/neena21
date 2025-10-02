@@ -34,6 +34,61 @@ document.addEventListener("DOMContentLoaded", () => {
   const downloadPageQR = document.getElementById("downloadPageQR");
   const downloadPlaylistQR = document.getElementById("downloadPlaylistQR");
   const openPlaylist = document.getElementById("openPlaylist");
+  const stickersEl = document.getElementById('stickers');
+  const toast = document.getElementById('toast');
+  const heartCountEl = document.getElementById('heartCount');
+  const giveHeartBtn = document.getElementById('giveHeart');
+
+  // heart counter persisted
+  const HEART_KEY = 'neena_heart_count_v1';
+  function getHearts(){ return Number(localStorage.getItem(HEART_KEY) || 0); }
+  function setHearts(n){ localStorage.setItem(HEART_KEY, String(n)); heartCountEl.textContent = n; }
+  // restore
+  setHearts(getHearts());
+
+  // toast helper
+  let toastTimeout = null;
+  function showToast(msg){
+    if(!toast) return; toast.textContent = msg; toast.classList.add('show');
+    clearTimeout(toastTimeout); toastTimeout = setTimeout(()=> toast.classList.remove('show'), 2200);
+  }
+
+  // spawn stickers periodically (small, cute images from assets/images)
+  const STICKER_SRC = [
+    'assets/images/meowl.jpg',
+    'assets/images/download (1).jpg',
+    'assets/images/download (2).jpg',
+    'assets/images/download (3).jpg'
+  ];
+  function spawnSticker(){
+    if(!stickersEl) return;
+    const s = document.createElement('div'); s.className = 'sticker pop';
+    const img = document.createElement('img'); img.src = STICKER_SRC[Math.floor(Math.random()*STICKER_SRC.length)];
+    s.appendChild(img);
+    // random pos inside card area
+    const rect = document.querySelector('.polaroid').getBoundingClientRect();
+    const x = rect.left + Math.random()*(rect.width-48);
+    const y = rect.top + Math.random()*(rect.height-48);
+    s.style.left = x + 'px'; s.style.top = y + 'px';
+    // when clicked, collect a heart
+    s.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      const current = getHearts(); setHearts(current+1);
+      showToast('+1 ♥ — collected!');
+      s.remove();
+    });
+    document.body.appendChild(s);
+    // auto-remove after some time
+    setTimeout(()=> s.remove(), 7000);
+  }
+  // spawn every 3.5-6s randomly
+  let spawnInterval = setInterval(spawnSticker, 4200);
+  // one initial sticker
+  setTimeout(spawnSticker, 900);
+
+  // clicking the big photo also gives a heart
+  if(photo){ photo.addEventListener('click', ()=>{ const current = getHearts(); setHearts(current+1); showToast('Thanks! +1 ♥'); }); }
+  if(giveHeartBtn){ giveHeartBtn.addEventListener('click', ()=>{ const current = getHearts(); setHearts(current+1); showToast('You gave a heart! +1 ♥'); }); }
 
   // build dots
   for(let i=0;i<total;i++){

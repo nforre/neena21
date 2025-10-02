@@ -8,12 +8,20 @@
 </head>
 <body>
   <header class="topbar">
-    <h1>happy 21st, <span id="her-name">Neena</span> 💖</h1>
+    <div class="topbar-row">
+      <h1>happy 21st, <span id="her-name">Neena</span> 💖</h1>
+      <div class="heart-collector" title="Hearts collected">
+        <button id="giveHeart" class="action">Give ♥</button>
+        <span id="heartCount">0</span>
+      </div>
+    </div>
     <p class="sub">a tiny digital scrapbook — made with ♥ by Journ</p>
   </header>
 
   <main class="scrapbook">
     <section class="card">
+      <!-- floating stickers live here -->
+      <div id="stickers" class="stickers" aria-hidden="true"></div>
       <div class="polaroid">
         <img id="photo" src="assets/images/meowl.jpg" alt="Polaroid photo for scrapbook page 1">
         <div class="caption">
@@ -58,6 +66,9 @@
       </div>
     </section>
   </main>
+
+  <!-- transient toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <footer class="foot">
     <small>Tip: use ← / → on desktop or swipe on mobile</small>
