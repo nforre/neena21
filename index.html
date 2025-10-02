@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy 21st — Scrapbook</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>happy 21st, <span id="her-name">Neena</span> 💖</h1>
+    <p class="sub">a tiny digital scrapbook — made with ♥ by Journ</p>
+  </header>
+
+  <main class="scrapbook">
+    <section class="card">
+      <div class="polaroid">
+        <img id="photo" src="assets/images/Kagamines as Charlie and Lola !!🦋🍅📒.jpg" alt="photo placeholder">
+        <div class="caption">
+          <h2 id="page-title">Reason #1</h2>
+          <p id="page-text">Replace this with your reason. Make it sweet, weird, or econ-jokey — anything!</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="prevBtn" class="nav">⟵</button>
+        <div class="meta">
+          <span id="pageCounter">1 / 21</span>
+          <div id="dots" class="dots"></div>
+        </div>
+        <button id="nextBtn" class="nav">⟶</button>
+      </div>
+
+      <div class="extras">
+        <button id="openPlaylist" class="action">Open playlist</button>
+        <div class="qr-wrap">
+          <div>
+            <p>QR — this page (open on phone)</p>
+            <img id="pageQR" alt="QR to this page">
+            <a id="downloadPageQR" class="small" download="scrapbook-qr.png">Download QR</a>
+          </div>
+          <div>
+            <p>QR — playlist</p>
+            <img id="playlistQR" alt="QR to playlist">
+            <a id="downloadPlaylistQR" class="small" download="playlist-qr.png">Download QR</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <small>Tip: use ← / → on desktop or swipe on mobile</small>
+  </footer>
+
+  <script src="js/script.js" defer></script>
+</body>
+</html>
