@@ -96,6 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const type = el.dataset.type;
       let visible = true;
       if(choice === 'both') visible = true;
+      else if(choice === 'none') visible = false;
       else if(choice === 'page') visible = (type === 'page');
       else if(choice === 'playlist') visible = (type === 'playlist');
       el.style.display = visible ? '' : 'none';
