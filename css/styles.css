@@ -1,12 +1,13 @@
 :root{
-  /* pastel kawaii palette */
-  --bg: #fffaf6;        /* very light pink-beige */
-  --card: #fff8ff;      /* soft cream */
-  --accent: #ff79c6;    /* pastel pink */
-  --accent-2: #ffd6a5;  /* peach */
-  --muted: #b89fb9;     /* lavender-gray */
-  --text: #3b2b2b;      /* warm brown for text */
-  --shadow: rgba(99, 56, 106, 0.12);
+  /* palette tuned to plaid attachment: soft pinks, cream, brown */
+  --bg: #fffaf6;        /* fallback background color */
+  --card: #fff8ee;      /* soft cream */
+  --accent: #f6a6c2;    /* rose pink */
+  --accent-2: #ffd6a5;  /* peach accent */
+  --muted: #bfa3b3;     /* muted mauve */
+  --text: #6b4536;      /* warm chocolate brown */
+  --shadow: rgba(107, 69, 54, 0.08);
+  --bg-image: url('../assets/images/plaid-bg.png');
 }
 
 *{box-sizing:border-box}
@@ -14,7 +15,12 @@ body{
   margin:0;
   min-height:100vh;
   font-family: Poppins, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
-  background: linear-gradient(180deg, var(--bg) 0%, #fff3f8 60%);
+  background-color: var(--bg);
+  /* plaid background if present + subtle white overlay for contrast */
+  background-image: var(--bg-image), linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85));
+  background-repeat: repeat, no-repeat;
+  background-size: auto, cover;
+  background-position: center;
   color:var(--text);
   display:flex;
   flex-direction:column;
