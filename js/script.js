@@ -1,7 +1,7 @@
 /* ----- CONFIG: edit these ----- */
-const HER_NAME = "[Her Name]";
-const YOUR_NAME = "[Your Name]";
-const PLAYLIST_URL = "https://open.spotify.com/playlist/REPLACE_WITH_YOUR_PLAYLIST_LINK";
+const HER_NAME = "Neena";
+const YOUR_NAME = "Journ";
+const PLAYLIST_URL = "https://open.spotify.com/playlist/6eq7TsNtsYyOno7dog51NO?si=bb5e5db7d564428d";
 /* ------------------------------- */
 
 /* --- pages: 21 slots. Replace text/images with your content --- */
