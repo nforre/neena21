@@ -16,11 +16,14 @@ body{
   min-height:100vh;
   font-family: Poppins, Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
   background-color: var(--bg);
-  /* plaid background if present + subtle white overlay for contrast */
-  background-image: var(--bg-image), linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85));
-  background-repeat: repeat, no-repeat;
-  background-size: auto, cover;
-  background-position: center;
+  /* plaid background if present + subtle white overlay for contrast
+    - gradient should be the top layer so it overlays the plaid
+    - list layers: overlay first, then image
+  */
+  background-image: linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), var(--bg-image);
+  background-repeat: no-repeat, repeat;
+  background-size: cover, auto;
+  background-position: center, center;
   color:var(--text);
   display:flex;
   flex-direction:column;
